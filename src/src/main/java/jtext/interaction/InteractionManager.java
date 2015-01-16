@@ -1,9 +1,12 @@
 package jtext.interaction;
 
+import com.google.common.collect.Lists;
 import jtext.game.Game;
 import jtext.game.GameState;
 
 import java.io.PrintStream;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,11 +23,12 @@ public class InteractionManager {
     public InteractionManager(GameState gameState) {
         this.gameState = gameState;
         actions = new HashMap<>();
-        actions.put("look", LookInteraction.INSTANCE);
-        actions.put("use", UseInteraction.INSTANCE);
-        actions.put("take", TakeInteraction.INSTANCE);
-        actions.put("pick", TakeInteraction.INSTANCE);
-        actions.put("go", GoInteraction.INSTANCE);
+        actions.put("look", new LookInteraction(Arrays.asList("at")));
+        actions.put("use", new UseInteraction(Collections.emptyList()));
+        actions.put("take", new TakeInteraction(Collections.emptyList()));
+        actions.put("pick", new TakeInteraction(Arrays.asList("up")));
+        actions.put("go", new GoInteraction(Arrays.asList("to")));
+        actions.put("walk", new GoInteraction(Arrays.asList("to")));
     }
 
     public void start() {

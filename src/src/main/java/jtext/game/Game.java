@@ -3,6 +3,7 @@ package jtext.game;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Strings;
+import jtext.command.Command;
 import jtext.entity.BaseEntity;
 import jtext.entity.Item;
 import jtext.entity.Location;
@@ -50,6 +51,11 @@ public class Game {
     private void addEntity(String id, BaseEntity entity) {
         entity.setId(id);
         entities.put(id, entity);
+        initCommand(entity, entity.getLook());
+    }
+
+    private void initCommand(BaseEntity entity, Command command) {
+        command.getActions().forEach(action -> action.init(entity));
     }
 
     public BaseEntity findEntityById(String id) {

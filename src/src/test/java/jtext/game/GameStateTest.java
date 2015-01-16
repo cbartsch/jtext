@@ -1,5 +1,6 @@
 package jtext.game;
 
+import jtext.action.Action;
 import jtext.action.WinAction;
 import jtext.command.Command;
 import jtext.command.ItemCommand;
@@ -53,6 +54,18 @@ public class GameStateTest {
     @Test
     public void testSimple() {
         assertNotNull("Game state was null", gameState);
+        Location startLocation = gameState.getGame().findLocationById("start_location");
+        testEmptyCommand(startLocation.getLook());
+        testEmptyCommand(startLocation.getTake());
+        testEmptyCommand(startLocation.getUse());
+        testEmptyCommand(startLocation.getUseWith());
+    }
+
+    private void testEmptyCommand(Command look) {
+        for(Action action : look.getActions()) {
+            assertEquals("TargetId should be initialized", 1, action.getTargetIdCount());
+            assertEquals("TargetId should be start_location", "start_location", action.getTargetIds().iterator().next());
+        }
     }
 
     @Test

@@ -1,20 +1,22 @@
 package jtext.interaction;
 
 import jtext.entity.BaseEntity;
-import jtext.entity.Item;
 import jtext.entity.Location;
 import jtext.game.GameState;
+
+import java.util.Collection;
 
 /**
  * Created by Chrisu on 16/01/2015.
  */
 public class UseInteraction extends Interaction {
-    public static final Interaction INSTANCE = new UseInteraction();
 
-    private UseInteraction() { }
+    public UseInteraction(Collection<String> ignoredPhrases) {
+        super(ignoredPhrases);
+    }
 
     @Override
-    public void apply(String parameter, GameState gameState) {
+    protected void applyInternal(String parameter, GameState gameState) {
         Location loc = gameState.getLocation();
         String itemId = parameter; // TODO Extract real item ID
         BaseEntity item = findItem(itemId, loc);

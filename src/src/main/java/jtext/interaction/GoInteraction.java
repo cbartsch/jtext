@@ -1,19 +1,21 @@
 package jtext.interaction;
 
-import jtext.entity.Item;
 import jtext.entity.Location;
 import jtext.game.GameState;
+
+import java.util.Collection;
 
 /**
  * Created by Chrisu on 16/01/2015.
  */
 public class GoInteraction extends Interaction {
-    public static final Interaction INSTANCE = new GoInteraction();
 
-    private GoInteraction() { }
+    public GoInteraction(Collection<String> ignoredPhrases) {
+        super(ignoredPhrases);
+    }
 
     @Override
-    public void apply(String parameter, GameState game) {
+    protected void applyInternal(String parameter, GameState game) {
         Location loc = game.getLocation();
         String locationId = parameter;
         if(loc.hasAdjacent(locationId)) {
