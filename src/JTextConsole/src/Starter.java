@@ -19,10 +19,9 @@ public class Starter {
         interactionManager.start();
         String input = null;
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        do {
-            input = reader.readLine();
+        while((input = reader.readLine()) != null && !input.toLowerCase().equals("exit")) {
             interactionManager.applyCommand(input);
-        } while(!Objects.equals("exit", input.toLowerCase()));
+        }
 
         System.out.println("Goodbye");
     }
