@@ -10,6 +10,8 @@ import java.util.Collection;
 
 /**
  * Created by Chrisu on 16/01/2015.
+ * <p/>
+ * Takes vertain items, removes it from it's location, and adds it to the game state's inventory.
  */
 public class TakeAction extends Action {
 
@@ -19,8 +21,8 @@ public class TakeAction extends Action {
 
     @Override
     public void apply(GameState gameState) {
-        for(BaseEntity entity : findEntities(gameState)) {
-            if(entity instanceof Item) {
+        for (BaseEntity entity : findEntities(gameState)) {
+            if (entity instanceof Item) {
                 Item item = (Item) entity;
                 gameState.addInventoryItem(item);
                 item.getLocation().removeItem(item);

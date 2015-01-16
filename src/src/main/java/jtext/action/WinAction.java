@@ -8,6 +8,8 @@ import java.util.Collection;
 
 /**
  * Created by Chrisu on 16/01/2015.
+ *
+ * If this action is applied, the player has won the game (= end).
  */
 public class WinAction extends Action {
     public WinAction(@JsonProperty("targets") Collection<String> targetIds) {
@@ -16,6 +18,7 @@ public class WinAction extends Action {
 
     @Override
     public void apply(GameState gameState) {
+        //TODO
         Logger.getLogger(getClass()).info("YOU WIN THE GAME");
     }
 }

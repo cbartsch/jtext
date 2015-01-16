@@ -21,7 +21,7 @@ public class Starter {
 
         System.out.printf("Enter 'exit' to quit the game at any time %n%n");
         interactionManager.start();
-        String input = null;
+        String input;
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         while((input = reader.readLine()) != null && !input.toLowerCase().equals("exit")) {
             interactionManager.applyCommand(input);

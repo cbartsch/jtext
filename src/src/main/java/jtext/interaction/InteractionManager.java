@@ -1,10 +1,7 @@
 package jtext.interaction;
 
-import com.google.common.collect.Lists;
-import jtext.game.Game;
 import jtext.game.GameState;
 
-import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;

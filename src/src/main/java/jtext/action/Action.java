@@ -13,6 +13,9 @@ import java.util.stream.Stream;
 
 /**
  * Created by Chrisu on 16/01/2015.
+ *
+ * Basic action which can be added to any Command.
+ * Subclasses define which action actually happens.
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXTERNAL_PROPERTY, property = "type")
 @JsonSubTypes({

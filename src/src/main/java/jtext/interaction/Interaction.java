@@ -1,8 +1,6 @@
 package jtext.interaction;
 
-import com.google.common.collect.ImmutableCollection;
 import jtext.entity.BaseEntity;
-import jtext.entity.Item;
 import jtext.entity.Location;
 import jtext.game.GameState;
 
