@@ -12,6 +12,10 @@ import java.util.Objects;
 public class Starter {
 
     public static void main(String[] args) throws IOException {
+        if(args.length < 1) {
+            System.out.println("first command line argument must be path to game .json file");
+            return;
+        }
         Game game = GameLoader.load(new FileInputStream(args[0]));
         InteractionManager interactionManager = new InteractionManager(new GameState(game, System.out));
 
