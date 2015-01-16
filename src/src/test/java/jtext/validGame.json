@@ -1,0 +1,84 @@
+{
+  "start": "location",
+  "start_text": "Welcome",
+  "locations": {
+    "location": {
+      "visible": false,
+      "adjacent": ["otherLocation"],
+      "objects": {
+        "stateObject": {
+          "state": "stateful"
+        },
+        "doIfObject": {
+          "look": {
+            "text": "You looked",
+            "if": [
+              {
+                "type": "item",
+                "items": [
+                  "item1",
+                  "item2"
+                ]
+              },
+              {
+                "type": "state",
+                "value": "state1",
+                "else": "Wrong state"
+              }
+            ],
+            "do": [
+              {
+                "type": "visible",
+                "targets": ["target1"],
+                "value": false
+              },
+              {
+                "type": "enable",
+                "targets": ["target2"],
+                "value": true
+              },
+              {
+                "type": "take",
+                "targets": ["target3"]
+              },
+              {
+                "type": "remove",
+                "targets": ["target4"]
+              },
+              {
+                "type": "state",
+                "targets": ["target5"],
+                "value": "targetState"
+              }
+            ]
+          }
+        },
+        "commandObject":{
+          "take": {
+            "text": "No take"
+          },
+          "look": {
+            "text": "No look"
+          },
+          "use": {
+            "text": "No use"
+          },
+          "use_with": {
+            "text": "No use_with",
+            "item": "useItem"
+          }
+        },
+        "disabledObject": {
+          "enabled": false
+        },
+        "hiddenObject": {
+          "visible": false
+        }
+      }
+
+    },
+    "otherLocation": {
+      "enabled": false
+    }
+  }
+}
