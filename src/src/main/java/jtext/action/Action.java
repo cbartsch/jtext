@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import jtext.entity.BaseEntity;
 import jtext.game.GameState;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -26,7 +27,7 @@ public abstract class Action {
     private final Collection<String> targetIds;
 
     public Action(@JsonProperty("targets") Collection<String> targetIds) {
-        this.targetIds = targetIds;
+        this.targetIds = targetIds != null ? targetIds : new ArrayList<>(1);
     }
 
     public Iterable<String> getTargetIds() {
@@ -44,5 +45,11 @@ public abstract class Action {
                 .map(id -> gameState.getGame().findEntityById(id))
                 .filter(e -> e != null)
                 .collect(Collectors.toList());
+    }
+
+    public void init(BaseEntity entity) {
+        if(targetIds.isEmpty()) {
+            targetIds.add(entity.getId());
+        }
     }
 }

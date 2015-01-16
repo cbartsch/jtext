@@ -239,7 +239,7 @@
         "key shelf": {
           "look": {"text": "A key shelf. Your apartment key is missing."}
         },
-        "door": {
+        "apartment_door": {
           "use_with": {
             "item": "apt_key",
             "if": [
