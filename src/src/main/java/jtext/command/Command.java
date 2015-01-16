@@ -3,6 +3,7 @@ package jtext.command;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jtext.action.Action;
 import jtext.condition.Condition;
+import jtext.game.GameState;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -12,6 +13,7 @@ import java.util.Iterator;
  * Created by Chrisu on 16/01/2015.
  */
 public class Command {
+    public static final Command EMPTY = new Command("I can't do this.", null, null);
     private final String text;
     private final Collection<Action> actions;
     private final Collection<Condition> conditions;
@@ -34,5 +36,14 @@ public class Command {
 
     public Iterable<Condition> getConditions() {
         return conditions::iterator;
+    }
+
+    public void apply(GameState gameState) {
+        if(conditions.stream().allMatch(c -> c.check(gameState))) {
+            gameState.display(text);
+            for(Action a : actions) {
+                a.apply(gameState);
+            }
+        }
     }
 }

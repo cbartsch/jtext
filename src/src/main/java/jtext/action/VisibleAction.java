@@ -1,6 +1,8 @@
 package jtext.action;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jtext.entity.BaseEntity;
+import jtext.game.GameState;
 
 import java.util.Collection;
 
@@ -14,5 +16,12 @@ public class VisibleAction extends Action {
                          @JsonProperty("value") Boolean value) {
         super(targetIds);
         this.value = value != null ? value : true;
+    }
+
+    @Override
+    public void apply(GameState gameState) {
+        for (BaseEntity entity : findEntities(gameState)) {
+            entity.setVisible(value);
+        }
     }
 }

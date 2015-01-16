@@ -10,6 +10,7 @@ import java.util.Collection;
  * Created by Chrisu on 16/01/2015.
  */
 public class ItemCommand extends Command {
+    public static final ItemCommand EMPTY = new ItemCommand("I can't do this.", null, null, "");
     public final String itemId;
 
     public ItemCommand(@JsonProperty("text") String text,

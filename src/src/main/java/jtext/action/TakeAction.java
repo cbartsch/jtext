@@ -1,6 +1,10 @@
 package jtext.action;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.sun.istack.internal.logging.Logger;
+import jtext.entity.BaseEntity;
+import jtext.entity.Item;
+import jtext.game.GameState;
 
 import java.util.Collection;
 
@@ -11,5 +15,18 @@ public class TakeAction extends Action {
 
     public TakeAction(@JsonProperty("targets") Collection<String> targetIds) {
         super(targetIds);
+    }
+
+    @Override
+    public void apply(GameState gameState) {
+        for(BaseEntity entity : findEntities(gameState)) {
+            if(entity instanceof Item) {
+                Item item = (Item) entity;
+                gameState.addInventoryItem(item);
+                item.getLocation().removeItem(item);
+            } else {
+                Logger.getLogger(getClass()).warning("TakeAction tried to take Location id: " + entity.getId());
+            }
+        }
     }
 }

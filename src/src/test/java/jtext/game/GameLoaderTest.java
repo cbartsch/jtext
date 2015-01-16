@@ -1,4 +1,4 @@
-package jtext;
+package jtext.game;
 
 import jtext.action.*;
 import jtext.command.Command;
@@ -8,6 +8,8 @@ import jtext.condition.ItemCondition;
 import jtext.condition.StateCondition;
 import jtext.entity.Item;
 import jtext.entity.Location;
+import jtext.game.Game;
+import jtext.game.GameLoader;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
@@ -27,6 +29,10 @@ public class GameLoaderTest {
         ));
     }
 
+    private Game loadGameFromFile(String fileName) throws IOException {
+        return GameLoader.load(getClass().getResourceAsStream(fileName));
+    }
+
     //will return no game because locations and start is not set
     @Test
     public void testEmpty() throws IOException {
@@ -44,7 +50,7 @@ public class GameLoaderTest {
                 "\"locations\": {}" +
                 "}", location, startText));
         assertNotNull("Game must not be null", game);
-        assertEquals("Game start location must be set", game.getStart(), location);
+        assertEquals("Game start location must be set", game.getStartLocationId(), location);
         assertEquals("Game start text must be set", game.getStartText(), startText);
         assertTrue("Game locations must be empty", game.getLocations().isEmpty());
     }
@@ -62,7 +68,7 @@ public class GameLoaderTest {
                 "}", location, startText, location));
 
         assertNotNull("Game must not be null", game);
-        assertEquals("Game start location must be set", game.getStart(), location);
+        assertEquals("Game start location must be set", game.getStartLocationId(), location);
         assertEquals("Game start text must be set", game.getStartText(), startText);
         assertEquals("Game locations must contain one entry", game.getLocations().size(), 1);
         Location locationEntity = game.getLocations().get(location);
@@ -71,12 +77,11 @@ public class GameLoaderTest {
     }
 
     @Test
-    public void testWithValidGamaJson() throws IOException {
-        InputStream validJsonStream = getClass().getResourceAsStream("validGame.json");
+    public void testWithValidGameJson() throws IOException {
+        Game game = loadGameFromFile("validGame.json");
 
-        Game game = GameLoader.load(validJsonStream);
         assertNotNull("Game must not be null", game);
-        assertEquals("Game start location must be set", game.getStart(), "location");
+        assertEquals("Game start location must be set", game.getStartLocationId(), "location");
         assertEquals("Game start text must be set", game.getStartText(), "Welcome");
         assertEquals("Game locations must contain two entries", game.getLocationCount(), 2);
         assertEquals("Game must contain seven entities", game.getEntityCount(), 7);
@@ -126,7 +131,7 @@ public class GameLoaderTest {
         );
         for (Condition condition : lookCommand.getConditions()) {
             assertEquals("Condition class was wrong", expectedConditionTypes.get(i), condition.getClass());
-            if(i == 1) {
+            if (i == 1) {
                 assertEquals("Action target count was not 1", "Wrong state", condition.elseText);
             }
             i++;
@@ -138,4 +143,11 @@ public class GameLoaderTest {
         assertEquals("Use with command item was wrong", "useItem", useWithCommand.itemId);
     }
 
+
+    @Test
+    public void testWithRealGameJson() throws IOException {
+        Game game = loadGameFromFile("realGame.json");
+
+        assertNotNull("Real game could not be loaded", game);
+    }
 }

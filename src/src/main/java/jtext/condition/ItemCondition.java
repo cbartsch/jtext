@@ -1,6 +1,7 @@
 package jtext.condition;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jtext.game.GameState;
 
 import java.util.Collection;
 
@@ -14,5 +15,15 @@ public class ItemCondition extends Condition {
                          @JsonProperty("items") Collection<String> itemIds) {
         super(elseText);
         this.itemIds = itemIds;
+    }
+
+    @Override
+    public boolean check(GameState state) {
+        boolean result = itemIds.stream().allMatch(state::hasInventoryItem);
+        if(!result) {
+            state.display(elseText);
+        }
+
+        return result;
     }
 }

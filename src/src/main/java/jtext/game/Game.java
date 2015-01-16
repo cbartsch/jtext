@@ -1,4 +1,4 @@
-package jtext;
+package jtext.game;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -15,20 +15,20 @@ import java.util.Map;
  */
 public class Game {
     private final Map<String, Location> locations;
-    private final String start;
+    private final String startLocationId;
     private final String startText;
 
     private final Map<String, BaseEntity> entities;
 
     public Game(
             @JsonProperty(value = "locations") Map<String, Location> locations,
-            @JsonProperty(value = "start") String start,
+            @JsonProperty(value = "start") String startLocationId,
             @JsonProperty(value = "start_text") String startText) {
-        if(locations == null || Strings.isNullOrEmpty(start)) {
+        if(locations == null || Strings.isNullOrEmpty(startLocationId)) {
             throw new IllegalArgumentException("Game must have locations and start location");
         }
         this.locations = locations;
-        this.start = start;
+        this.startLocationId = startLocationId;
         this.startText = startText;
         entities = new HashMap<>();
 
@@ -40,7 +40,9 @@ public class Game {
             Location location = locationEntry.getValue();
             addEntity(locationEntry.getKey(), location);
             for (String itemId: location.getItemIds()) {
-                addEntity(itemId, location.findItemById(itemId));
+                Item item = location.findItemById(itemId);
+                addEntity(itemId, item);
+                item.setLocation(location);
             }
         }
     }
@@ -66,8 +68,8 @@ public class Game {
         return locations;
     }
 
-    public String getStart() {
-        return start;
+    public String getStartLocationId() {
+        return startLocationId;
     }
 
     public String getStartText() {
@@ -76,5 +78,9 @@ public class Game {
 
     public Location findLocationById(String id) {
         return locations.get(id);
+    }
+
+    public Location getStartLocation() {
+        return findLocationById(startLocationId);
     }
 }

@@ -1,6 +1,8 @@
 package jtext.action;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jtext.entity.BaseEntity;
+import jtext.game.GameState;
 
 import java.util.Collection;
 
@@ -14,5 +16,12 @@ public class StateAction extends Action {
                        @JsonProperty("value") String value) {
         super(targetIds);
         this.value = value;
+    }
+
+    @Override
+    public void apply(GameState gameState) {
+        for (BaseEntity entity : findEntities(gameState)) {
+            entity.setState(value);
+        }
     }
 }

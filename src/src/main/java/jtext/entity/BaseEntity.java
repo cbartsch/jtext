@@ -27,11 +27,11 @@ public class BaseEntity {
                       @JsonProperty("use_with") ItemCommand useWith) {
         this.visible = visible != null ? visible : true;
         this.enabled = enabled != null ? enabled : true;
-        this.state = state;
-        this.look = look;
-        this.use = use;
-        this.take = take;
-        this.useWith = useWith;
+        this.state = state != null ? state : "";
+        this.look = look != null ? look : Command.EMPTY;
+        this.use = use != null ? use : Command.EMPTY;
+        this.take = take != null ? take : Command.EMPTY;
+        this.useWith = useWith != null ? useWith : ItemCommand.EMPTY;
     }
 
     public String getId() {

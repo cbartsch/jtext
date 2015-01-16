@@ -152,7 +152,7 @@
 						"text": "You put the toast inside the toaster.",	
 						"do": [ {					
 							"type": "state",
-							"state": "loaded",
+							"value": "loaded",
 							"targets": ["toaster"]
 						}, {
 							"type": "remove_item",
@@ -163,7 +163,7 @@
 						"if": [ { 
 							"type": "state", 
 							"targets": ["toaster"],
-							"state": "loaded",
+							"value": "loaded",
 							"else": "There is nothing to toast inside the toaster.",
 						} ],
 						"do": [ { 
@@ -172,7 +172,7 @@
 						 	"targets": ["apt_key"] 
 						}, {
 							"type": "state",
-							"state": "empty",
+							"value": "empty",
 							"targets": "toaster"
 						} ]
 					}

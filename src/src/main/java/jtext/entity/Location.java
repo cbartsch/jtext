@@ -50,4 +50,9 @@ public class Location extends BaseEntity {
     public int getAdjacentCount() {
         return adjacent.size();
     }
+
+    public void removeItem(Item item) {
+        objects.remove(item.getId());
+        item.setLocation(null);
+    }
 }
