@@ -8,6 +8,8 @@ import java.util.Collection;
 
 /**
  * Created by Chrisu on 16/01/2015.
+ *
+ * Enables or disables certain entities.
  */
 public class EnableAction extends Action {
     public final boolean value;

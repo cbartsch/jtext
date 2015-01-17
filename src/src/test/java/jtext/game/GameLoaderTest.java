@@ -8,13 +8,10 @@ import jtext.condition.ItemCondition;
 import jtext.condition.StateCondition;
 import jtext.entity.Item;
 import jtext.entity.Location;
-import jtext.game.Game;
-import jtext.game.GameLoader;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.List;

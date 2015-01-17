@@ -9,6 +9,8 @@ import java.util.Collection;
 
 /**
  * Created by Chrisu on 16/01/2015.
+ *
+ * Removes certain items from the game state's inventory.
  */
 public class RemoveAction extends Action {
 

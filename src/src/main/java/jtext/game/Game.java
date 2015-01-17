@@ -52,6 +52,9 @@ public class Game {
         entity.setId(id);
         entities.put(id, entity);
         initCommand(entity, entity.getLook());
+        initCommand(entity, entity.getTake());
+        initCommand(entity, entity.getUse());
+        initCommand(entity, entity.getUseWith());
     }
 
     private void initCommand(BaseEntity entity, Command command) {

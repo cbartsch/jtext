@@ -8,6 +8,8 @@ import java.util.Collection;
 
 /**
  * Created by Chrisu on 16/01/2015.
+ *
+ * Changes the state of certain entities to a defined value.
  */
 public class StateAction extends Action {
     public final String value;
