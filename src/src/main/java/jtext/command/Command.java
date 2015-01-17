@@ -11,6 +11,10 @@ import java.util.Iterator;
 
 /**
  * Created by Chrisu on 16/01/2015.
+ *
+ * Commands are applied to the game state by the user,
+ * via entering text commands.
+ * They apply a list of actions, if all conditions check out.
  */
 public class Command {
     public static final Command EMPTY = new Command("I can't do this.", null, null);

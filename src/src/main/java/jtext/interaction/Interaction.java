@@ -10,6 +10,13 @@ import java.util.Objects;
 
 /**
  * Created by Chrisu on 16/01/2015.
+ *
+ * Interactions represent interactions between the user and the system.
+ *
+ * They parse the user's input,
+ * locate a game entity to interact with
+ * and apply the respective commands of the entity,
+ * if the game state allows this.
  */
 public abstract class Interaction {
     private final Collection<String> ignoredPhrases;

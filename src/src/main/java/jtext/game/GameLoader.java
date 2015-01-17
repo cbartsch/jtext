@@ -11,6 +11,8 @@ import java.util.logging.Logger;
 
 /**
  * Created by Chrisu on 16/01/2015.
+ *
+ * The game loader loads the game structure from a JSON file.
  */
 public class GameLoader {
     private static Logger logger = Logger.getLogger(GameLoader.class.getSimpleName());

@@ -8,6 +8,9 @@ import java.util.Collection;
 
 /**
  * Created by Chrisu on 16/01/2015.
+ *
+ * The item command extends the normal command by adding a reference to an item,
+ * for the use_with command, this means the entered item must be this item.
  */
 public class ItemCommand extends Command {
     public static final ItemCommand EMPTY = new ItemCommand("I can't do this.", null, null, "");

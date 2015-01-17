@@ -8,6 +8,8 @@ import java.util.Collection;
 
 /**
  * Created by Chrisu on 16/01/2015.
+ *
+ * The state condition checks out if the state of a list of entities is the required state.
  */
 public class StateCondition extends Condition {
     private final Collection<String> targetIds;

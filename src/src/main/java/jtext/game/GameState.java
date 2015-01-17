@@ -11,6 +11,11 @@ import java.util.Objects;
 
 /**
  * Created by Chrisu on 16/01/2015.
+ *
+ * The game state represents the current state of a game, which a user can interact with.
+ *
+ * It contains a reference to the game structure, the inventory, the current location,
+ * and a print stream which prints messages to the user.
  */
 public class GameState {
     private Location location;
