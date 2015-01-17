@@ -8,6 +8,8 @@ import java.util.Collection;
 
 /**
  * Created by Chrisu on 16/01/2015.
+ *
+ * The look interaction calls the look command's apply() method of an object, if it is visible.
  */
 public class LookInteraction extends Interaction {
 

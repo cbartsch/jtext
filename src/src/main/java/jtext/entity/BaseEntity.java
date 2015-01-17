@@ -6,6 +6,12 @@ import jtext.command.ItemCommand;
 
 /**
  * Created by Chrisu on 16/01/2015.
+ *
+ * The base class for an object in the game.
+ * Objects have a unique identifier,
+ * a visible and enabled state,
+ * a custom state,
+ * and commands to interact with them: look, use, take, useWith.
  */
 public class BaseEntity {
     private String id;

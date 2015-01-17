@@ -12,6 +12,10 @@ import java.util.Set;
 
 /**
  * Created by Chrisu on 16/01/2015.
+ *
+ * Location represents a location the user can be in.
+ * They have a list of items which the user can interact with,
+ * and a list of adjacent locations which the user can go to.
  */
 public class Location extends BaseEntity {
     private final Map<String, Item> objects;

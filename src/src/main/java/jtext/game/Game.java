@@ -13,6 +13,8 @@ import java.util.Map;
 
 /**
  * Created by Chrisu on 16/01/2015.
+ *
+ * The game represents the static structure of a game, as described in a JSON file.
  */
 public class Game {
     private final Map<String, Location> locations;

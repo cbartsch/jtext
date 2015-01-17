@@ -8,6 +8,8 @@ import java.util.Collection;
 
 /**
  * Created by Chrisu on 16/01/2015.
+ *
+ * The use interaction calls the use command's apply() method of an object, if it is visible and enabled.
  */
 public class UseInteraction extends Interaction {
 

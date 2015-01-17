@@ -9,6 +9,10 @@ import java.util.Map;
 
 /**
  * Created by Chrisu on 16/01/2015.
+ *
+ * The interaction manager is the centerpiece of the interaction between the user and the system.
+ *
+ * It takes input from the user, and applies it to the system by finding the appropriate interaction.
  */
 public class InteractionManager {
     public static final String WORD_SEPARATOR = " ";
