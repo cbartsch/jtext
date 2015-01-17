@@ -21,6 +21,7 @@ public class InteractionManager {
         this.gameState = gameState;
         actions = new HashMap<>();
         actions.put("look", new LookInteraction(Arrays.asList("at")));
+        actions.put("inspect", new LookInteraction(Collections.emptyList()));
         actions.put("use", new UseInteraction(Collections.emptyList()));
         actions.put("take", new TakeInteraction(Collections.emptyList()));
         actions.put("pick", new TakeInteraction(Arrays.asList("up")));

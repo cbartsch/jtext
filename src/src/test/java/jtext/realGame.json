@@ -242,6 +242,7 @@
         "apartment_door": {
           "use_with": {
             "item": "apt_key",
+            "text": "You left your apartment.",
             "if": [
               {
                 "type": "item",

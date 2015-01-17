@@ -20,9 +20,13 @@ public class GoInteraction extends Interaction {
         String locationId = parameter;
         if(loc.hasAdjacent(locationId)) {
             Location newLocation = game.getGame().findLocationById(locationId);
-            game.setLocation(newLocation);
-            // TODO Real location text/translashun
-            game.display("I am now in %s", locationId);
+            if(newLocation.isVisible() && newLocation.isEnabled()) {
+                game.setLocation(newLocation);
+                // TODO Real location text/translashun
+                game.display("I am now in %s", locationId);
+            } else {
+                game.display("I can't go to %s", locationId);
+            }
         } else {
             // TODO Real location text/translashun
             game.display("I can't go to %s", locationId);
