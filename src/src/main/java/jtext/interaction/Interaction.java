@@ -4,6 +4,7 @@ import jtext.entity.BaseEntity;
 import jtext.entity.Location;
 import jtext.game.GameState;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Objects;
@@ -19,10 +20,10 @@ import java.util.Objects;
  * if the game state allows this.
  */
 public abstract class Interaction {
-    private final Collection<String> ignoredPhrases;
+    public final Collection<String> ignoredPhrases;
 
-    public Interaction(Collection<String> ignoredPhrases) {
-        this.ignoredPhrases = Collections.unmodifiableCollection(ignoredPhrases);
+    public Interaction(String ... ignoredPhrases) {
+        this.ignoredPhrases = Collections.unmodifiableCollection(Arrays.asList(ignoredPhrases));
     }
 
     public void apply(String parameter, GameState game) {
@@ -30,6 +31,8 @@ public abstract class Interaction {
         for (String ignoredPhrase : ignoredPhrases) {
             if(cleanedParameter.startsWith(ignoredPhrase + InteractionManager.WORD_SEPARATOR)) {
                 cleanedParameter = cleanedParameter.substring(ignoredPhrase.length() + InteractionManager.WORD_SEPARATOR.length(), cleanedParameter.length());
+            } else if(cleanedParameter.trim().equals(ignoredPhrase)) {
+                cleanedParameter = "";
             }
         }
 

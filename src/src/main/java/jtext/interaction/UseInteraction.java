@@ -14,10 +14,9 @@ import java.util.Collection;
  * The use interaction calls the use command's apply() method of an object, if it is visible and enabled.
  */
 public class UseInteraction extends Interaction {
-    // TODO Replace this with a translatable String, if we want to
     private static final String WITH_STRING = InteractionManager.WORD_SEPARATOR + "with" + InteractionManager.WORD_SEPARATOR;
 
-    public UseInteraction(Collection<String> ignoredPhrases) {
+    public UseInteraction(String ... ignoredPhrases) {
         super(ignoredPhrases);
     }
 

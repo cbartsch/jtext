@@ -8,6 +8,7 @@ import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 /**
  * Created by Chrisu on 16/01/2015.
@@ -60,5 +61,13 @@ public class GameState {
 
     public void addInventoryItem(Item item) {
         inventory.put(item.getId(), item);
+    }
+
+    public int getInventorySize() {
+        return inventory.size();
+    }
+
+    public Stream<Item> streamInventoryItems() {
+        return inventory.values().stream();
     }
 }

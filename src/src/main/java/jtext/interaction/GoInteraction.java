@@ -13,7 +13,7 @@ import java.util.Collection;
  */
 public class GoInteraction extends Interaction {
 
-    public GoInteraction(Collection<String> ignoredPhrases) {
+    public GoInteraction(String ... ignoredPhrases) {
         super(ignoredPhrases);
     }
 
@@ -25,13 +25,11 @@ public class GoInteraction extends Interaction {
             Location newLocation = game.getGame().findLocationById(locationId);
             if(newLocation.isVisible() && newLocation.isEnabled()) {
                 game.setLocation(newLocation);
-                // TODO Real location text/translashun
-                game.display("I am now in %s", locationId);
+                newLocation.getLook().apply(game);
             } else {
                 game.display("I can't go to %s", locationId);
             }
         } else {
-            // TODO Real location text/translashun
             game.display("I can't go to %s", locationId);
         }
     }

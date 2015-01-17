@@ -13,7 +13,7 @@ import java.util.Collection;
  */
 public class TakeInteraction extends Interaction {
 
-    public TakeInteraction(Collection<String> ignoredPhrases) {
+    public TakeInteraction(String ... ignoredPhrases) {
         super(ignoredPhrases);
     }
 

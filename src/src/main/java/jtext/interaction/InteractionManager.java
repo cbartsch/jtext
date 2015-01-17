@@ -1,5 +1,6 @@
 package jtext.interaction;
 
+import com.google.common.base.Strings;
 import jtext.game.GameState;
 
 import java.util.Arrays;
@@ -16,21 +17,27 @@ import java.util.Map;
  */
 public class InteractionManager {
     public static final String WORD_SEPARATOR = " ";
-    private final Map<String, Interaction> actions;
+    private final Map<String, Interaction> commands;
 
     private final GameState gameState;
 
 
     public InteractionManager(GameState gameState) {
         this.gameState = gameState;
-        actions = new HashMap<>();
-        actions.put("look", new LookInteraction(Arrays.asList("at")));
-        actions.put("inspect", new LookInteraction(Collections.emptyList()));
-        actions.put("use", new UseInteraction(Collections.emptyList()));
-        actions.put("take", new TakeInteraction(Collections.emptyList()));
-        actions.put("pick", new TakeInteraction(Arrays.asList("up")));
-        actions.put("go", new GoInteraction(Arrays.asList("to")));
-        actions.put("walk", new GoInteraction(Arrays.asList("to")));
+        commands = new HashMap<>();
+        commands.put("look", new LookInteraction("at"));
+        commands.put("inspect", new LookInteraction());
+        commands.put("use", new UseInteraction());
+        commands.put("take", new TakeInteraction());
+        commands.put("pick", new TakeInteraction("up"));
+        commands.put("go", new GoInteraction("to", "towards"));
+        commands.put("walk", new GoInteraction("to"));
+        commands.put("cd", new GoInteraction());
+        commands.put("help", new HelpInteraction(this));
+        commands.put("?", new HelpInteraction(this));
+        commands.put("inventory", new InventoryInteraction());
+        commands.put("items", new InventoryInteraction());
+        commands.put("ls", new InventoryInteraction());
     }
 
     public void start() {
@@ -38,11 +45,18 @@ public class InteractionManager {
     }
 
     public void applyCommand(String command) {
-        int index = command.indexOf(WORD_SEPARATOR);
-        if(index >= 0) {
-            String commandName = command.substring(0, index);
-            String parameter = command.substring(index + 1);
-            Interaction interaction = actions.get(commandName);
+        if(!Strings.isNullOrEmpty(command)) {
+            String parameter = "";
+            Interaction interaction = commands.get(command);
+            if(interaction == null) {
+                int index = command.indexOf(WORD_SEPARATOR);
+                if(index >=0) {
+                    String commandName = command.substring(0, index);
+                    parameter = command.substring(index + 1);
+                    interaction = commands.get(commandName);
+                }
+            }
+
             if (interaction != null) {
                 interaction.apply(parameter, gameState);
             } else {
@@ -50,8 +64,11 @@ public class InteractionManager {
                 gameState.display("Huh?");
             }
         } else {
-            // TODO Display the command help
-            gameState.display("Huh?");
+            gameState.display("Try entering 'help' to see a list of available commands!");
         }
+    }
+
+    public Iterable<Map.Entry<String, Interaction>> listCommands() {
+        return commands.entrySet();
     }
 }
