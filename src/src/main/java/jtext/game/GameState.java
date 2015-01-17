@@ -19,7 +19,7 @@ import java.util.Objects;
  */
 public class GameState {
     private Location location;
-    private final Map<String, BaseEntity> inventory;
+    private final Map<String, Item> inventory;
     private final Game game;
     private final PrintStream output;
 
@@ -42,7 +42,7 @@ public class GameState {
         return game;
     }
 
-    public BaseEntity findInventoryItemById(String id) {
+    public Item findInventoryItemById(String id) {
         return inventory.get(id);
     }
 
@@ -54,7 +54,7 @@ public class GameState {
         return inventory.containsKey(id);
     }
 
-    public BaseEntity removeInventoryItem(String id) {
+    public Item removeInventoryItem(String id) {
         return inventory.remove(id);
     }
 
