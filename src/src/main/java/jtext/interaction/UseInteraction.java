@@ -1,6 +1,8 @@
 package jtext.interaction;
 
+import com.fasterxml.jackson.databind.deser.Deserializers;
 import jtext.entity.BaseEntity;
+import jtext.entity.Item;
 import jtext.entity.Location;
 import jtext.game.GameState;
 
@@ -10,6 +12,8 @@ import java.util.Collection;
  * Created by Chrisu on 16/01/2015.
  */
 public class UseInteraction extends Interaction {
+    // TODO Replace this with a translatable String, if we want to
+    private static final String WITH_STRING = InteractionManager.WORD_SEPARATOR + "with" + InteractionManager.WORD_SEPARATOR;
 
     public UseInteraction(Collection<String> ignoredPhrases) {
         super(ignoredPhrases);
@@ -17,10 +21,37 @@ public class UseInteraction extends Interaction {
 
     @Override
     protected void applyInternal(String parameter, GameState gameState) {
+        if(parameter.contains(WITH_STRING)) {
+            applyUseWith(parameter, gameState);
+        } else {
+            applyUse(parameter, gameState);
+        }
+    }
+
+    private void applyUseWith(String parameter, GameState gameState) {
+        String[] itemIds = parameter.split(WITH_STRING);
+        String inventoryId = itemIds[0];
+        Item inventoryItem = gameState.findInventoryItemById(inventoryId);
+        if(inventoryItem == null) {
+            gameState.display("I don't seem to have %s", inventoryId);
+        } else {
+            String otherId = itemIds[1];
+            BaseEntity otherItem = gameState.getLocation().findItemById(otherId);
+            if(otherItem != null) {
+                if(otherItem.getUseWith().itemId.equals(inventoryId)) {
+                    otherItem.getUseWith().apply(gameState);
+                } else {
+                    gameState.display("I can't user %s with %s", inventoryId, otherId);
+                }
+            } else {
+                gameState.display("I can't seem to find %s", otherId);
+            }
+        }
+    }
+
+    private void applyUse(String itemId, GameState gameState) {
         Location loc = gameState.getLocation();
-        String itemId = parameter; // TODO Extract real item ID
         BaseEntity item = findItem(itemId, loc);
-        //TODO use with
         if(item != null && item.isVisible()) {
             if(item.isEnabled()) {
                 item.getUse().apply(gameState);
@@ -31,4 +62,6 @@ public class UseInteraction extends Interaction {
             gameState.display("I can't seem to find %s", itemId);
         }
     }
+
+
 }
