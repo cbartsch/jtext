@@ -18,7 +18,6 @@ public class WinAction extends Action {
 
     @Override
     public void apply(GameState gameState) {
-        //TODO Display real win message
-        gameState.display("Congratulations, you have finished the game!");
+        gameState.getWinListener().run();
     }
 }

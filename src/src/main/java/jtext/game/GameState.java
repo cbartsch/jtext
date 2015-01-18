@@ -25,6 +25,7 @@ public class GameState {
     private final Map<String, Item> inventory;
     private final Game game;
     private final PrintStream output;
+    private Runnable winListener = () -> {};
 
     public GameState(Game game, PrintStream output) {
         this.game = game;
@@ -105,5 +106,13 @@ public class GameState {
 
     public Stream<Item> streamInventoryItems() {
         return inventory.values().stream();
+    }
+
+    public Runnable getWinListener() {
+        return winListener;
+    }
+
+    public void setWinListener(Runnable winListener) {
+        this.winListener = winListener;
     }
 }
