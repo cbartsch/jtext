@@ -28,7 +28,7 @@ public class HelpInteraction extends Interaction {
                 .collect(Collectors.groupingBy(e -> e.getValue().getClass()))   //group commands by type
                 .values().forEach(groupedInteractions ->
                         gameState.display(groupedInteractions.stream()
-                                .map(this::interactionText)
+                                .map(this::interactionText)                     //show command name and ignored phrases
                                 .collect(Collectors.joining(", "))              //separate commands with comma
                         )
         );
