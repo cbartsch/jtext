@@ -11,9 +11,9 @@ import java.util.Map;
 
 /**
  * Created by Chrisu on 16/01/2015.
- *
+ * <p>
  * The interaction manager is the centerpiece of the interaction between the user and the system.
- *
+ * <p>
  * It takes input from the user, and applies it to the system by finding the appropriate interaction.
  */
 public class InteractionManager {
@@ -46,13 +46,14 @@ public class InteractionManager {
     }
 
     public void applyCommand(String command) {
-        if(!Strings.isNullOrEmpty(command)) {
+        if (!Strings.isNullOrEmpty(command)) {
             String parameter = "";
-            Interaction interaction = commands.get(command);
-            if(interaction == null) {
+            String commandName = command;
+            Interaction interaction = commands.get(commandName);
+            if (interaction == null) {
                 int index = command.indexOf(WORD_SEPARATOR);
-                if(index >=0) {
-                    String commandName = command.substring(0, index);
+                if (index >= 0) {
+                    commandName = command.substring(0, index);
                     parameter = command.substring(index + 1);
                     interaction = commands.get(commandName);
                 }
@@ -70,6 +71,10 @@ public class InteractionManager {
     }
 
     private String findClosestCommand(String command) {
-        return HammingUtils.findClosestElement(command, actions.keySet());
+        return HammingUtils.findClosestElement(command, commands.keySet());
+    }
+
+    public Iterable<Map.Entry<String, Interaction>> listCommands() {
+        return commands.entrySet();
     }
 }
