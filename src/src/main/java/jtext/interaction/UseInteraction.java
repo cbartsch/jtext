@@ -1,6 +1,5 @@
 package jtext.interaction;
 
-import com.fasterxml.jackson.databind.deser.Deserializers;
 import jtext.entity.BaseEntity;
 import jtext.entity.Item;
 import jtext.entity.Location;
@@ -42,10 +41,10 @@ public class UseInteraction extends Interaction {
                 if(otherItem.getUseWith().itemId.equals(inventoryId)) {
                     otherItem.getUseWith().apply(gameState);
                 } else {
-                    gameState.display("I can't user %s with %s", inventoryId, otherId);
+                    gameState.display("I can't use %s with %s", inventoryId, otherId);
                 }
             } else {
-                gameState.display("I can't seem to find %s", otherId);
+                gameState.displayItemNotFoundMessage(otherId);
             }
         }
     }
@@ -60,7 +59,7 @@ public class UseInteraction extends Interaction {
                 gameState.display("I cannot use %s", itemId);
             }
         } else {
-            gameState.display("I can't seem to find %s", itemId);
+            gameState.displayItemNotFoundMessage(itemId);
         }
     }
 

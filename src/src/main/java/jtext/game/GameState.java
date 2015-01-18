@@ -1,13 +1,15 @@
 package jtext.game;
 
-import jtext.entity.BaseEntity;
+import com.google.common.base.Strings;
 import jtext.entity.Item;
 import jtext.entity.Location;
+import jtext.util.HammingUtils;
 
 import java.io.PrintStream;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -33,6 +35,36 @@ public class GameState {
 
     public void display(String text, Object ... args) {
         output.printf(text + "%n", args);
+    }
+
+    public void displayItemNotFoundMessage(String itemId) {
+        String match = findClosestEntity(itemId);
+        if(Strings.isNullOrEmpty(match)) {
+            display("I can't seem to find %s.", itemId);
+        } else {
+            display("I can't seem to find %s, did you mean %s?", itemId, findClosestEntity(itemId));
+        }
+    }
+
+    public void displayLocationNotFoundMessage(String location) {
+        String match = findClosestAdjacent(location);
+        if(!Strings.isNullOrEmpty(match)) {
+            display("I can't seem to find %s, did you mean %s?", location, match);
+        } else {
+            display("I can't seem to find %s.", location);
+        }
+    }
+
+    private String findClosestAdjacent(String location) {
+        Collection<String> adjacent = this.location.listAdjacents();
+        adjacent = adjacent.stream()
+                .filter(l -> game.findLocationById(l).isVisible())
+                .collect(Collectors.toList());
+        return HammingUtils.findClosestElement(location, adjacent);
+    }
+
+    private String findClosestEntity(String entityId) {
+        return HammingUtils.findClosestElement(entityId, location.findVisibleItemIds());
     }
 
     public Location getLocation() {

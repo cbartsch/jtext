@@ -19,18 +19,20 @@ public class GoInteraction extends Interaction {
 
     @Override
     protected void applyInternal(String parameter, GameState game) {
-        Location loc = game.getLocation();
-        String locationId = parameter;
-        if(loc.hasAdjacent(locationId)) {
-            Location newLocation = game.getGame().findLocationById(locationId);
+        Location currentLocation = game.getLocation();
+        boolean hasAdjacent = currentLocation.hasAdjacent(parameter);
+        if(hasAdjacent) {
+            Location newLocation = game.getGame().findLocationById(parameter);
             if(newLocation.isVisible() && newLocation.isEnabled()) {
                 game.setLocation(newLocation);
                 newLocation.getLook().apply(game);
             } else {
-                game.display("I can't go to %s", locationId);
+                hasAdjacent = false;
             }
-        } else {
-            game.display("I can't go to %s", locationId);
         }
+
+        if(!hasAdjacent) {
+            game.displayLocationNotFoundMessage(parameter);
+    }
     }
 }

@@ -1,7 +1,6 @@
 package jtext.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.google.common.annotations.VisibleForTesting;
 import jtext.command.Command;
 import jtext.command.ItemCommand;
 
@@ -9,6 +8,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Created by Chrisu on 16/01/2015.
@@ -58,5 +58,15 @@ public class Location extends BaseEntity {
     public void removeItem(Item item) {
         objects.remove(item.getId());
         item.setLocation(null);
+    }
+
+    public Collection<String> findVisibleItemIds() {
+        return objects.keySet().stream()
+                .filter(id -> objects.get(id).isVisible())
+                .collect(Collectors.toList());
+    }
+
+    public Collection<String> listAdjacents() {
+        return Collections.unmodifiableCollection(adjacent);
     }
 }
