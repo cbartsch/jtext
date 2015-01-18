@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Stream;
 
 /**
  * Created by Chrisu on 16/01/2015.
@@ -80,5 +81,8 @@ public class InteractionManager {
 
     public Iterable<Map.Entry<String, Interaction>> listCommands() {
         return commands.entrySet();
+    }
+    public Stream<Map.Entry<String, Interaction>> streamCommands() {
+        return commands.entrySet().stream();
     }
 }

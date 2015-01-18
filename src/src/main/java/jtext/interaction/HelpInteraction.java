@@ -5,6 +5,8 @@ import jtext.game.GameState;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Created by Chrisu on 17/01/2015.
@@ -12,7 +14,7 @@ import java.util.Map;
 public class HelpInteraction extends Interaction {
     private final InteractionManager interactionManager;
 
-    public HelpInteraction(InteractionManager interactionManager, String ... ignoredPhrases) {
+    public HelpInteraction(InteractionManager interactionManager, String... ignoredPhrases) {
         super(ignoredPhrases);
         this.interactionManager = interactionManager;
     }
@@ -20,10 +22,24 @@ public class HelpInteraction extends Interaction {
     @Override
     protected void applyInternal(String parameter, GameState gameState) {
         gameState.display("Here is a list of all possible commands:");
-        for (Map.Entry<String, Interaction> interactionEntry : interactionManager.listCommands()) {
-            if(interactionEntry.getValue().isVisible()) {
-                gameState.display("%s %s", interactionEntry.getKey(), Joiner.on("/").join(interactionEntry.getValue().ignoredPhrases));
-            }
-        }
+
+        interactionManager.streamCommands()
+                .filter(e -> e.getValue().isVisible())                          //do not show invisible commands
+                .collect(Collectors.groupingBy(e -> e.getValue().getClass()))   //group commands by type
+                .values().forEach(groupedInteractions ->
+                        gameState.display(groupedInteractions.stream()
+                                .map(this::interactionText)
+                                .collect(Collectors.joining(", "))              //separate commands with comma
+                        )
+        );
+    }
+
+    private String interactionText(Map.Entry<String, Interaction> interaction) {
+        String phrases = join("/", interaction.getValue().ignoredPhrases);
+        return interaction.getKey() + (phrases.length() > 0 ? " " + phrases : "");
+    }
+
+    private String join(String delimiter, Collection<?> values) {
+        return values.stream().map(Object::toString).collect(Collectors.joining(delimiter));
     }
 }
