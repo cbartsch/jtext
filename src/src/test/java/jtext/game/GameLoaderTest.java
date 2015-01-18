@@ -18,6 +18,10 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
+/**
+ * Test loading game from JSON file.
+ * Tests, if all objects are instantiated and all properties are set correctly.
+ */
 public class GameLoaderTest {
 
     private Game loadGame(String json) throws IOException {
