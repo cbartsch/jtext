@@ -47,11 +47,15 @@ public class GameState {
     }
 
     public void displayLocationNotFoundMessage(String location) {
-        String match = findClosestAdjacent(location);
-        if(!Strings.isNullOrEmpty(match)) {
-            display("I can't seem to find %s, did you mean %s?", location, match);
+        if(location.trim().isEmpty()) {
+            display("Where should I go to?");
         } else {
-            display("I can't seem to find %s.", location);
+            String match = findClosestAdjacent(location);
+            if (!Strings.isNullOrEmpty(match)) {
+                display("I can't seem to find %s, did you mean %s?", location, match);
+            } else {
+                display("I can't seem to find %s.", location);
+            }
         }
     }
 
