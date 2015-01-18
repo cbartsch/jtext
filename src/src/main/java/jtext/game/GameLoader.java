@@ -22,7 +22,6 @@ public class GameLoader {
         ObjectMapper mapper = new ObjectMapper();
         try {
             game = mapper.readValue(input, Game.class);
-
         } catch (JsonParseException | JsonMappingException e) {
             logger.log(Level.WARNING, "Could not read game JSON", e);
         }
