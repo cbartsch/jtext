@@ -26,8 +26,9 @@ public class HammingUtils {
     }
 
     public static int findHammingDistance(String a, String b) {
-        String shorter = (a.length() <= b.length() ? a : b).toLowerCase();
-        String longer = (shorter == a ? b : a).toLowerCase();
+        boolean firstIsShorter = a.length() <= b.length();
+        String shorter = (firstIsShorter ? a : b).toLowerCase();
+        String longer = (!firstIsShorter ? b : a).toLowerCase();
         int hammingDistance = 0;
         // Pad String so both have the same length, use 0 so the hamming distance increases for each additional character
         shorter = Strings.padEnd(shorter, longer.length(), (char) 0);
