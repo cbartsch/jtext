@@ -21,6 +21,7 @@ import java.util.Objects;
  */
 public abstract class Interaction {
     public final Collection<String> ignoredPhrases;
+    private boolean visible = true;
 
     public Interaction(String ... ignoredPhrases) {
         this.ignoredPhrases = Collections.unmodifiableCollection(Arrays.asList(ignoredPhrases));
@@ -48,4 +49,16 @@ public abstract class Interaction {
     }
 
     protected abstract void applyInternal(String parameter, GameState gameState);
+
+    public Interaction setVisible(boolean visible) {
+        this.visible = visible;
+        return this;
+    }
+
+    /**
+     * if the interaction is not visible, it is not listed with the help command.
+     */
+    public boolean isVisible() {
+        return visible;
+    }
 }

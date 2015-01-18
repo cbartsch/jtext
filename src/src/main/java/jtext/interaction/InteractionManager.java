@@ -33,12 +33,12 @@ public class InteractionManager {
         commands.put("pick", new TakeInteraction("up"));
         commands.put("go", new GoInteraction("to", "towards"));
         commands.put("walk", new GoInteraction("to"));
-        commands.put("cd", new GoInteraction());
-        commands.put("help", new HelpInteraction(this));
-        commands.put("?", new HelpInteraction(this));
+        commands.put("cd", new GoInteraction().setVisible(false));
+        commands.put("help", new HelpInteraction(this).setVisible(false));
+        commands.put("?", new HelpInteraction(this).setVisible(false));
         commands.put("inventory", new InventoryInteraction());
         commands.put("items", new InventoryInteraction());
-        commands.put("ls", new InventoryInteraction());
+        commands.put("ls", new InventoryInteraction().setVisible(false));
     }
 
     public void start() {

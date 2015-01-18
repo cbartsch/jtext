@@ -21,7 +21,7 @@ public class HelpInteraction extends Interaction {
     protected void applyInternal(String parameter, GameState gameState) {
         gameState.display("Here is a list of all possible commands:");
         for (Map.Entry<String, Interaction> interactionEntry : interactionManager.listCommands()) {
-            if(!(interactionEntry.getValue() instanceof HelpInteraction)) {
+            if(interactionEntry.getValue().isVisible()) {
                 gameState.display("%s %s", interactionEntry.getKey(), Joiner.on("/").join(interactionEntry.getValue().ignoredPhrases));
             }
         }
