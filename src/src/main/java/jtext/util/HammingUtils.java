@@ -8,7 +8,7 @@ import java.util.Collection;
  * Created by Stefan on 18/01/2015.
  */
 public class HammingUtils {
-    private static final int HAMMING_THRESHOLD = 4;
+    private static final int HAMMING_THRESHOLD = 5;
 
     public static String findClosestElement(String element, Collection<String> haystack) {
         int minDistance = Integer.MAX_VALUE;

@@ -1,6 +1,7 @@
 package jtext.interaction;
 
 import jtext.game.GameState;
+import jtext.util.HammingUtils;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -47,11 +48,15 @@ public class InteractionManager {
                 interaction.apply(parameter, gameState);
             } else {
                 // TODO Search for a command that the user might have wanted to use
-                gameState.display("Huh?");
+                gameState.display("I could not understand %s, did you mean %s?", commandName, findClosestCommand(commandName));
             }
         } else {
             // TODO Display the command help
             gameState.display("Huh?");
         }
+    }
+
+    private String findClosestCommand(String command) {
+        return HammingUtils.findClosestElement(command, actions.keySet());
     }
 }
