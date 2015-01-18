@@ -28,7 +28,7 @@ public class TakeInteraction extends Interaction {
                 gameState.display("I cannot pick up %s", parameter);
             }
         } else {
-            gameState.display("I can't seem to find %s", parameter);
+            gameState.displayItemNotFoundMessage(parameter);
         }
     }
 }

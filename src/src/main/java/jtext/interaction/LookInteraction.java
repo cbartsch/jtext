@@ -24,7 +24,7 @@ public class LookInteraction extends Interaction {
         if(item != null && item.isVisible()) {
             item.getLook().apply(gameState);
         } else {
-            gameState.display("I can't seem to find %s", parameter);
+            gameState.displayItemNotFoundMessage(parameter);
         }
     }
 
