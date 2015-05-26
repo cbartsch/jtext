@@ -22,18 +22,17 @@
                     {{location.name}}
                 </div>
 
-                <div class="panel-body location">
-                    <div class="row">
+                <div class="panel-body">
+                    <div class="row location">
                         <img ng-src="{{location.image}}" class="col-md-8 col-md-offset-2">
                     </div>
-                </div>
 
-                <div class="panel-body">
                     <div class="row">
                         <ul class="log">
                             <li ng-repeat="entry in log">{{entry}}</li>
                         </ul>
                     </div>
+
                     <div class="row">
                         <form ng-submit="command()" class="form">
                             <div class="form-group">
