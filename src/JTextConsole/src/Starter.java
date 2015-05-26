@@ -37,6 +37,7 @@ public class Starter {
         }
 
         System.out.println("Goodbye");
+        reader.readLine();
     }
 
     private static String readLine(BufferedReader reader) throws IOException {

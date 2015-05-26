@@ -146,16 +146,39 @@
         "door": {
           "visible": false,
           "enabled": false,
+          "state": "closed",
           "look": {"text": "The door of your bedroom."},
-          "use": {"text": "The door is locked."},
+          "use": {
+            "if": [
+              {
+                "type": "state",
+                "targets": ["door"],
+                "value": "closed",
+                "else": "The door is already open"
+              }
+            ],
+            "text": "The door is locked."
+          },
           "take": {"text": "I don't think so."},
           "use_with": {
             "item": "room key",
             "text": "You opened the door.",
+            "if": [
+              {
+                "type": "state",
+                "targets": ["door"],
+                "value": "closed",
+                "else": "The door is already open"
+              }
+            ],
             "do": [
               {
                 "type": "visible",
                 "targets": ["hallway"]
+              },
+              {
+                "type": "state",
+                "value": "open"
               }
             ]
           }
