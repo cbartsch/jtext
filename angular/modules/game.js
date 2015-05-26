@@ -3,6 +3,18 @@
  */
 
 var actions = {
+    enabled: function(gameState, action) {
+        gameState.print("ENABLED NOT IMPLEMENTED YET");
+    },
+    remove: function(gameState, action) {
+        gameState.print("REMOVE NOT IMPLEMENTED YET");
+    },
+    state: function (gameState, action) {
+        gameState.print("STATE NOT IMPLEMENTED YET");
+    },
+    take: function(gameState, action) {
+        gameState.print("TAKE NOT IMPLEMENTED YET");
+    },
     visible: function (gameState, action) {
         action.targets.forEach(function (targetId) {
             var entity = gameState.game.allEntities[targetId].model;
@@ -13,8 +25,8 @@ var actions = {
             entity.visible = value;
         });
     },
-    state: function (gameState, action) {
-
+    win: function(gameState, action) {
+        gameState.print("WIN NOT IMPLEMENTED YET");
     }
 };
 
