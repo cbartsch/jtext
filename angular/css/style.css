@@ -4,6 +4,7 @@ div.container {
 
 ul.log {
     list-style: none;
+    padding: 0 2rem;
 }
 
 .footer {
