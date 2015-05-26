@@ -1,0 +1,12 @@
+div.container {
+    padding-top: 3rem;
+}
+
+ul.log {
+    list-style: none;
+}
+
+.footer {
+    text-align: center;
+    font-size: 8pt;
+}

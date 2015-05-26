@@ -11,27 +11,27 @@
     <script src="js/jstext.js"></script>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-    <div class="container" style="padding-top: 3rem;">
+    <div class="container" ng-controller="GameController">
         <main>
             <div class="panel panel-default">
-                <div class="panel-heading">
-                    Current Location
+                <div class="panel-heading location">
+                    {{location.name}}
                 </div>
 
-                <div class="panel-body">
+                <div class="panel-body location">
                     <div class="row">
-                        <img src="http://www.theodora.com/maps/new9/time_zones_4.jpg" class="col-md-8 col-md-offset-2">
+                        <img ng-src="{{location.image}}" class="col-md-8 col-md-offset-2">
                     </div>
                 </div>
 
                 <div class="panel-body">
                     <div class="row">
-                        <ul>
-                            <li>Some log</li>
-                            <li>Another log</li>
+                        <ul class="log">
+                            <li ng-repeat="entry in log">{{entry}}</li>
                         </ul>
                     </div>
                     <div class="row">
