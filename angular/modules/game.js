@@ -26,7 +26,6 @@ function EntityInteraction(cmd) {
             ? current.model
             : current.model.objects[param];
 
-        console.log(entity)
         if (!entity || entity.visible === false) {
             gameState.print(param + " not found");
         } else {
@@ -54,7 +53,22 @@ function EntityInteraction(cmd) {
 var interactions = {
     look: new EntityInteraction("look"),
     take: new EntityInteraction("take"),
-    use: new EntityInteraction("use")
+    use: new EntityInteraction("use"),
+    go: {
+        do: function (gameState, param) {
+            var location = gameState.game.allEntities[param];
+            if (location) {
+                if (gameState.location.model.adjacent.indexOf(location.name) >= 0) {
+                    gameState.location = location;
+                    gameState.print("You are not at: " + location.name);
+                } else {
+                    gameState.print("Can not go to " + location.name);
+                }
+            } else {
+                gameState.print(param + " not found. Can not go.");
+            }
+        }
+    }
 };
 
 function Entity(name, model) {
