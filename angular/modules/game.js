@@ -85,7 +85,7 @@ function GameState(game, printer) {
         if (interaction) {
             interaction.do(this, param);
         } else {
-            console.log("interaction", cmd, "not found");
+            this.print("What");
         }
     }
 }
