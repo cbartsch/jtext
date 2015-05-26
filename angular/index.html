@@ -14,5 +14,46 @@
 </head>
 <body>
 
+    <div class="container" style="padding-top: 3rem;">
+        <main>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Current Location
+                </div>
+
+                <div class="panel-body">
+                    <div class="row">
+                        <img src="http://www.theodora.com/maps/new9/time_zones_4.jpg" class="col-md-8 col-md-offset-2">
+                    </div>
+                </div>
+
+                <div class="panel-body">
+                    <div class="row">
+                        <ul>
+                            <li>Some log</li>
+                            <li>Another log</li>
+                        </ul>
+                    </div>
+                    <div class="row">
+                        <form ng-submit="command()" class="form">
+                            <div class="form-group">
+                                <div class="col-md-11">
+                                    <input type="text" ng-model="input" class="form-control" placeholder="Write command...">
+                                </div>
+                                <div class="col-md-1">
+                                    <input type="submit" class="btn btn-primary" value="Send">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="panel-footer footer">
+                    JS Text Adventure
+                </div>
+            </div>
+        </main>
+    </div>
+
 </body>
 </html>
