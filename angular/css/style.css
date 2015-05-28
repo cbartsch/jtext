@@ -1,0 +1,18 @@
+div.container {
+    padding-top: 3rem;
+}
+
+ul.log {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 2rem;
+}
+
+.row.location {
+    border-bottom: 1px solid rgb(221, 221, 221);
+    padding-bottom: 15px;
+}
+.footer {
+    text-align: center;
+    font-size: 8pt;
+}

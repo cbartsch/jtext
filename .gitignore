@@ -1,3 +1,6 @@
 .idea/
 out/
 *.iml
+.metadata/
+/angular/js/jstext.js
+/*.log

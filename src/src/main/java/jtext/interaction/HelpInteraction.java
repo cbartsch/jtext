@@ -1,12 +1,9 @@
 package jtext.interaction;
 
-import com.google.common.base.Joiner;
 import jtext.game.GameState;
 
-import java.util.Collection;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * Created by Chrisu on 17/01/2015.
@@ -28,18 +25,16 @@ public class HelpInteraction extends Interaction {
                 .collect(Collectors.groupingBy(e -> e.getValue().getClass()))   //group commands by type
                 .values().forEach(groupedInteractions ->
                         gameState.display(groupedInteractions.stream()
-                                .map(this::interactionText)                     //show command name and ignored phrases
+                                .map(HelpInteraction::interactionText)          //show command name and ignored phrases
                                 .collect(Collectors.joining(", "))              //separate commands with comma
                         )
         );
     }
 
-    private String interactionText(Map.Entry<String, Interaction> interaction) {
-        String phrases = join("/", interaction.getValue().ignoredPhrases);
+    private static String interactionText(Map.Entry<String, Interaction> interaction) {
+        String phrases = interaction.getValue().ignoredPhrases.stream()
+                .map(Object::toString)
+                .collect(Collectors.joining("/"));
         return interaction.getKey() + (phrases.length() > 0 ? " " + phrases : "");
-    }
-
-    private String join(String delimiter, Collection<?> values) {
-        return values.stream().map(Object::toString).collect(Collectors.joining(delimiter));
     }
 }
