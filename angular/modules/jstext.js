@@ -1,6 +1,4 @@
 "use strict";
-//= include ../node_modules/angular/angular.js
-//= include game.js
 
 var jstext = angular.module("jstext", []);
 
