@@ -20,7 +20,7 @@ jstext.controller("GameController", ["$scope", "$http", function ($scope, $http)
     $scope.updateLocation();
     $scope.log = [];
     $scope.print = function (text) {
-        $scope.log.push(text);
+        $scope.log.push({index: $scope.log.length, text: text});
     };
     $scope.input = "";
 
