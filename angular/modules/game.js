@@ -39,102 +39,141 @@ var conditions = {
     }
 };
 
-function EntityInteraction(cmd) {
-    this.cmd = cmd;
-    this.do = function (gameState, param) {
+function EntityCommand(gameState, cmd, cmdKey, param) {
+    var withIndex = param.indexOf(WITH_SEPARATOR);
+    var entityName, withItemName;
+    if (withIndex >= 0) {
+        entityName = param.substr(withIndex + WITH_SEPARATOR.length);
+        withItemName = param.substr(0, withIndex);
+    } else {
+        entityName = param;
+        withItemName = null;
+    }
 
-        var withIndex = param.indexOf(WITH_SEPARATOR);
-        var entityName, withItemName;
-        if (withIndex >= 0) {
-            entityName = param.substr(withIndex + WITH_SEPARATOR.length);
-            withItemName = param.substr(0, withIndex);
+    var current = gameState.location;
+    var entity = entityName.length == 0
+        ? current : current.objects[entityName];
+
+    if (withItemName && !(withItemName in gameState.inventory.objects)) {
+        gameState.print(withItemName + " not in inventory.");
+    } else if (!entity || !entity.visible) {
+        gameState.print("Can not " + cmd + ": " + entityName + " not found");
+    } else {
+        var action = entity[withItemName ? cmdKey + "_with" : cmdKey];
+
+        if (!action) {
+            gameState.print("Not possible.");
+        } else if (withItemName && withItemName !== action.item) {
+            gameState.print("Can not use " + withItemName + " with this.");
         } else {
-            entityName = param;
-            withItemName = null;
-        }
-
-        var current = gameState.location;
-        var entity = entityName.length == 0
-            ? current : current.objects[entityName];
-
-        if (withItemName && !(withItemName in gameState.inventory.objects)) {
-            gameState.print(withItemName + " not in inventory.");
-        } else if (!entity || !entity.visible) {
-            gameState.print(entityName + " not found");
-        } else {
-            var action = entity[withItemName ? this.cmd + "_with" : this.cmd];
-
-            if (!action) {
-                gameState.print("Not possible.");
-            } else if (withItemName && withItemName !== action.item) {
-                gameState.print("Can not use " + withItemName + " with this.");
-            } else {
-                var conditionMet = true;
-                if (action.if) {
-                    action.if.forEach(function (condition) {
-                        var conditionFunc = conditions[condition.type];
-                        if (conditionFunc) {
-                            var targets = condition.targets || [entity.name];
-                            conditionMet = targets.every(function (targetId) {
+            var conditionMet = true;
+            if (action.if) {
+                action.if.forEach(function (condition) {
+                    var conditionFunc = conditions[condition.type];
+                    if (conditionFunc) {
+                        var targets = condition.targets || [entity.name];
+                        conditionMet = targets.every(function (targetId) {
+                            var entity = gameState.allEntities[targetId];
+                            var result = conditionFunc(gameState, condition, entity);
+                            if (!result) {
+                                gameState.print(condition.else);
+                            }
+                            return result;
+                        });
+                    }
+                });
+            }
+            if (conditionMet) {
+                if (action.text) {
+                    gameState.print(action.text);
+                }
+                if (action.do) {
+                    action.do.forEach(function (action) {
+                        var actionFunc = actions[action.type];
+                        if (actionFunc) {
+                            var targets = action.targets || [entity.name];
+                            targets.forEach(function (targetId) {
                                 var entity = gameState.allEntities[targetId];
-                                var result = conditionFunc(gameState, condition, entity);
-                                if (!result) {
-                                    gameState.print(condition.else);
-                                }
-                                return result;
+                                actionFunc(gameState, action, entity);
                             });
                         }
                     });
-                }
-                if (conditionMet) {
-                    if (action.text) {
-                        gameState.print(action.text);
-                    }
-                    if (action.do) {
-                        action.do.forEach(function (action) {
-                            var actionFunc = actions[action.type];
-                            if (actionFunc) {
-                                var targets = action.targets || [entity.name];
-                                targets.forEach(function (targetId) {
-                                    var entity = gameState.allEntities[targetId];
-                                    actionFunc(gameState, action, entity);
-                                });
-                            }
-                        });
-                    }
                 }
             }
         }
     }
 }
 
-function GoInteraction(cmd) {
-    this.cmd = cmd;
-    this.do = function (gameState, param) {
-        var location = gameState.allEntities[param];
-        if (location && location.visible) {
-            if (gameState.location.adjacent.indexOf(location.name) >= 0) {
-                gameState.location = location;
-                gameState.print("You are now at: " + location.name);
-            } else {
-                gameState.print("Can not go to " + location.name);
-            }
+function GoCommand(gameState, cmd, cmdKey, param) {
+    var location = gameState.allEntities[param];
+    if (location && location.visible) {
+        if(location.enabled && gameState.location.adjacent.indexOf(location.name) >= 0) {
+            gameState.location = location;
+            gameState.print("You are now at: " + location.name);
         } else {
-            gameState.print(param + " not found. Can not go.");
+            gameState.print("Can not go to " + location.name);
         }
+    } else {
+        gameState.print(param + " not found. Can not go.");
+    }
+}
+
+function HelpCommand(gameState) {
+    gameState.print("Available commands: " + interactions.map(function(interaction) {
+        return interaction.cmds[0];
+    }).join(", ") + ".");
+}
+
+function Interaction(cmds, cmdKey, command) {
+    this.cmds = cmds;
+    this.do = function (gameState, cmd, param) {
+        command(gameState, cmd, cmdKey, param);
     };
 }
 
-var interactions = {
-    look: new EntityInteraction("look"),
-    take: new EntityInteraction("take"),
-    use: new EntityInteraction("use"),
-    go: new GoInteraction("go")
+var interactions = [
+    new Interaction(["use"], "use", EntityCommand),
+    new Interaction(["take", "pick up"], "take", EntityCommand),
+    new Interaction(["look at", "look", "inspect"], "look", EntityCommand),
+    new Interaction(["go to", "walk to", "go", "walk", "cd"], "go", GoCommand),
+    new Interaction(["help", "?"], "", HelpCommand)
+];
+
+interactions.forCmd = function (cmd) {
+    var usedCmd = "";
+    var matches = $.grep(interactions, function (interaction) {
+        return interaction.cmds.some(function (iCmd) {
+            if (cmd.substr(0, iCmd.length) === iCmd) {
+                usedCmd = iCmd;
+                return true;
+            }
+            return false;
+        });
+    });
+    var interaction = matches.length > 0 ? matches[0] : null;
+    var param = cmd.substr(usedCmd.length).trim();
+    return {
+        do: function (gameState) {
+            if (interaction) {
+                interaction.do(gameState, usedCmd, param);
+            }
+            return this;
+        },
+        else: function (callback) {
+            if (!interaction) {
+                callback();
+            }
+        }
+    }
 };
 
 function Entity(name, model, parent) {
     this.name = name;
     this.parent = parent;
+
+    this.text = model.text;
+    this.imageUrl = model.imageUrl;
+
     this.visible = getOrDefault(model.visible, true);
     this.enabled = getOrDefault(model.enabled, true);
 
@@ -192,6 +231,8 @@ function buildEntityMap(model) {
 }
 
 function GameState(game, printer, winCallback) {
+    var gameState = this;
+
     this.game = game;
     this.print = printer;
 
@@ -209,22 +250,11 @@ function GameState(game, printer, winCallback) {
     };
 
     this.enter = function (text) {
-        var spacePos = text.indexOf(" ");
-        var cmd, param;
-        if (spacePos > 0) {
-            cmd = text.substr(0, spacePos);
-            param = text.substr(spacePos + 1);
-        } else {
-            cmd = text;
-            param = "";
-        }
-
-        var interaction = interactions[cmd];
-        if (interaction) {
-            interaction.do(this, param);
-        } else {
-            this.print("What");
-        }
+        interactions.forCmd(text.trim())
+            .do(this)
+            .else(function () {
+                gameState.print("What");
+            });
     }
 }
 
