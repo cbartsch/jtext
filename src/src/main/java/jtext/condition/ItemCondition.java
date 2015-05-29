@@ -14,7 +14,7 @@ public class ItemCondition extends Condition {
     private final Collection<String> itemIds;
 
     public ItemCondition(@JsonProperty("else") String elseText,
-                         @JsonProperty("items") Collection<String> itemIds) {
+                         @JsonProperty("targets") Collection<String> itemIds) {
         super(elseText);
         this.itemIds = itemIds;
     }

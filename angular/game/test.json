@@ -7,6 +7,24 @@
       "adjacent": ["hallway"],
       "look": {"text": "My bedroom. It contains a light, a desk and your wardrobe. A door leeds to the hallway."},
       "objects": {
+        "test": {
+          "take": {
+            "text": "take test",
+            "if": [{"type": "state", "value": "theState", "else": "state not set yet"}],
+            "do": [{"type": "take"}]
+          },
+          "use": {
+            "text": "set the state",
+            "do": [{"type": "state", "value": "theState", "targets": ["test"]}]
+          }
+        },
+        "cond": {
+          "use": {
+            "text": "win",
+            "if": [{"type": "item", "targets": ["test"], "else": "not have test"}],
+            "do": [{"type": "win"}]
+          }
+        },
         "blanket": {
           "use": {
             "text": "You pulled off the blanket and are greeted by your legs.",
@@ -21,12 +39,12 @@
           "take": {"text": "I don't need my blanket for university."}
         },
         "light": {
-          "state": "off",          
+          "state": "off",
           "use": {
             "text": "Turned on the light",
             "if": [
               {
-                "type": "state", 
+                "type": "state",
                 "targets": ["light"],
                 "value": "off",
                 "else": "I like it more, when it's on."
@@ -34,7 +52,7 @@
             ],
             "do": [
               {
-                "type": "state", 
+                "type": "state",
                 "targets": ["light"],
                 "value": "on"
               },
@@ -42,7 +60,7 @@
                 "type": "visible",
                 "targets": [
                   "bedroom",
-                  "door",                  
+                  "door",
                   "desk",
                   "wardrobe"
                 ]
@@ -50,7 +68,7 @@
             ]
           },
           "look": {"text": "A lamp on your night stand."},
-          "take": {"text": "No. It wouldn't work without plugging it in anyway."}          
+          "take": {"text": "No. It wouldn't work without plugging it in anyway."}
         },
         "legs": {
           "visible": false,
@@ -319,7 +337,7 @@
               {
                 "type": "item",
                 "else": "You should put on some clothes first.",
-                "items": ["clothes"]
+                "targets": ["clothes"]
               }
             ],
             "do": [{"type": "win"}]
