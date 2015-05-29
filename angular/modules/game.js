@@ -182,7 +182,9 @@ function buildEntityMap(model) {
     }
     Object.keys(allEntities).forEach(function (name) {
         var entity = allEntities[name];
-        Object.keys(entity.objects).forEach(function (objName) {
+        var objectModel = entity.objects;
+        entity.objects = {};
+        Object.keys(objectModel).forEach(function (objName) {
             entity.objects[objName] = allEntities[objName];
         });
     });
