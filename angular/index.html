@@ -27,11 +27,9 @@
                     <div class="row location">
                         <img ng-src="{{location.image}}" class="col-md-8 col-md-offset-2">
                         <div class="col-md-2 inventory">
-                            <ul class="nav nav-stacked navbar-right">
-                                <li>Item 1</li>
-                                <li>Item 2</li>
-                                <li>Item 3</li>
-                                <li>Item 4</li>
+                            <h2>Inventory</h2>
+                            <ul ng-repeat="(name, item) in inventory" class="nav nav-stacked navbar-right">
+                                <li>{{name}}</li>
                             </ul>
                         </div>
                     </div>
