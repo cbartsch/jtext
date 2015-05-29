@@ -21,9 +21,11 @@ jstext.controller("GameController", ["$scope", "$http", function ($scope, $http)
     });
 
     $scope.updateLocation = function () {
-        $scope.location = {
-            name: $scope.gameState && $scope.gameState.location.name,
-            image: "http://www.theodora.com/maps/new9/time_zones_4.jpg"
+        $scope.location = $scope.gameState ? {
+            name: $scope.gameState.location.name,
+            text: $scope.gameState.location.text,
+            image: $scope.gameState.location.imageUrl || "http://www.theodora.com/maps/new9/time_zones_4.jpg"
+        } : {
         };
     };
     $scope.updateLocation();

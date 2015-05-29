@@ -3,6 +3,8 @@
   "start_text": "You wake up in your bed, covered by a warm blanket.%nYou open your eyes, but can't see anything.%nTime to go to university!",
   "locations": {
     "bedroom": {
+      "text": "Bedroom",
+      "imageUrl": "http://www.citrusinteria.com/wp-content/uploads/2015/04/bedroom1.jpg",
       "visible": false,
       "adjacent": ["hallway"],
       "look": {"text": "My bedroom. It contains a light, a desk and your wardrobe. A door leeds to the hallway."},
@@ -173,7 +175,7 @@
             ],
             "do": [
               {
-                "type": "visible",
+                "type": "enabled",
                 "targets": ["hallway"]
               },
               {
@@ -186,6 +188,7 @@
       }
     },
     "kitchen": {
+      "text": "Kitchen",
       "adjacent": ["hallway"],
       "look": {"text": "Your more or less clean kitchen.%nIt contains a counter and a fridge."},
       "objects": {
@@ -297,7 +300,8 @@
       }
     },
     "hallway": {
-      "visible": false,
+      "text": "Hallway",
+      "enabled": false,
       "adjacent": [
         "bedroom",
         "kitchen"

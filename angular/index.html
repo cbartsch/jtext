@@ -20,7 +20,7 @@
         <main>
             <div class="panel panel-default">
                 <div class="panel-heading location">
-                    {{location.name}}
+                    <h1>{{location.text}}</h1>
                 </div>
 
                 <div class="panel-body">
@@ -44,7 +44,7 @@
                         <form ng-submit="command()" class="form">
                             <div class="form-group">
                                 <div class="col-md-11">
-                                    <input type="text" ng-model="input" class="form-control" placeholder="Write command...">
+                                    <input type="text" autofocus ng-model="input" class="form-control" placeholder="Write command...">
                                 </div>
                                 <div class="col-md-1">
                                     <input type="submit" class="btn btn-primary" value="Send">
