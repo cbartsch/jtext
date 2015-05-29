@@ -1,6 +1,10 @@
 "use strict";
 
-var jstext = angular.module("jstext", []);
+var jstext = angular.module("jstext", ['ngSanitize']);
+
+function formatText(text) {
+    return text.replace(/%n/g, "<br/>");
+}
 
 jstext.controller("GameController", ["$scope", "$http", function ($scope, $http) {
 
@@ -22,16 +26,17 @@ jstext.controller("GameController", ["$scope", "$http", function ($scope, $http)
 
     $scope.updateLocation = function () {
         $scope.location = $scope.gameState ? {
-            name: $scope.gameState.location.name,
-            text: $scope.gameState.location.text,
+            text: formatText($scope.gameState.location.text),
             image: $scope.gameState.location.imageUrl || "http://www.theodora.com/maps/new9/time_zones_4.jpg"
-        } : {
-        };
+        } : {};
     };
     $scope.updateLocation();
 
     $scope.print = function (text) {
-        $scope.log.push({index: $scope.log.length, text: text});
+        $scope.log.push({
+            index: $scope.log.length,
+            text: formatText(text)
+        });
     };
 
     $scope.input = "";
