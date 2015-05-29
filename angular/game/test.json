@@ -7,24 +7,6 @@
       "adjacent": ["hallway"],
       "look": {"text": "My bedroom. It contains a light, a desk and your wardrobe. A door leeds to the hallway."},
       "objects": {
-        "test": {
-          "take": {
-            "text": "take test",
-            "if": [{"type": "state", "value": "theState", "else": "state not set yet"}],
-            "do": [{"type": "take"}]
-          },
-          "use": {
-            "text": "set the state",
-            "do": [{"type": "state", "value": "theState", "targets": ["test"]}]
-          }
-        },
-        "cond": {
-          "use": {
-            "text": "win",
-            "if": [{"type": "item", "targets": ["test"], "else": "not have test"}],
-            "do": [{"type": "win"}]
-          }
-        },
         "blanket": {
           "use": {
             "text": "You pulled off the blanket and are greeted by your legs.",
