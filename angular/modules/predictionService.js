@@ -25,8 +25,12 @@ var predictionService = prediction.factory("PredictionService", ["HAMMING_THRESH
 
         var minDistance = Number.MAX_VALUE;
         var closestElement = null;
+        var foundEle;
         for (var i in haystack) {
             var test = haystack[i];
+            if(test.length < 2) {
+                continue;
+            }
             var currentEle = element;
             if(currentEle.length > test.length) {
                 currentEle = currentEle.substr(0, test.length);
@@ -35,12 +39,13 @@ var predictionService = prediction.factory("PredictionService", ["HAMMING_THRESH
             if (currentDistance < minDistance) {
                 minDistance = currentDistance;
                 closestElement = test;
+                foundEle = currentEle;
             }
         }
 
         // If the distance is greater than the threshold, the closest element is too different
         // limit threshold to length of input - 1, to avoid finding completely different strings
-        var threshold = Math.min(HAMMING_THRESHOLD, element.length - 1);
+        var threshold = Math.min(HAMMING_THRESHOLD, foundEle.length - 1);
         return minDistance <= threshold ? closestElement : null;
     };
 
