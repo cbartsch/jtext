@@ -9,7 +9,7 @@ function getOrDefault(value, defaultValue) {
 }
 
 var actions = {
-    enabled: function (gameState, action, entity) {
+    enable: function (gameState, action, entity) {
         entity.enabled = getOrDefault(action.value, !entity.enabled);
     },
     remove: function (gameState, action, entity) {
@@ -58,6 +58,8 @@ function EntityCommand(gameState, cmd, cmdKey, param) {
         gameState.print(withItemName + " not in inventory.");
     } else if (!entity || !entity.visible) {
         gameState.print("Can not " + cmd + ": " + entityName + " not found");
+    } else if (!entity.enabled) {
+        gameState.print("Not possible right now.")
     } else {
         var action = entity[withItemName ? cmdKey + "_with" : cmdKey];
 
@@ -88,13 +90,14 @@ function EntityCommand(gameState, cmd, cmdKey, param) {
                     gameState.print(action.text);
                 }
                 if (action.do) {
-                    action.do.forEach(function (action) {
-                        var actionFunc = actions[action.type];
+                    action.do.forEach(function (doAction) {
+                        var actionFunc = actions[doAction.type];
                         if (actionFunc) {
-                            var targets = action.targets || [entity.name];
+                            var targets = doAction.targets || [entity.name];
+                            console.log("targets", targets, "type", doAction.type);
                             targets.forEach(function (targetId) {
                                 var entity = gameState.allEntities[targetId];
-                                actionFunc(gameState, action, entity);
+                                actionFunc(gameState, doAction, entity);
                             });
                         }
                     });
