@@ -22,6 +22,11 @@ div.log-cont {
     overflow: auto;
 }
 
+img.location-img {
+    max-height: 400px;
+    max-width: 100%;
+}
+
 ul.log li.output {
     color: black;
 }

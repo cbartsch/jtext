@@ -54,4 +54,8 @@ jstext.controller("GameController", ["$scope", "$http", "PredictionService", fun
         }
         $scope.input = "";
     };
+
+    $scope.useItem = function(name) {
+        $scope.input = "use " + name + " with ";
+    }
 }]);
