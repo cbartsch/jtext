@@ -237,11 +237,12 @@ function buildEntityMap(model) {
     return allEntities;
 }
 
-function GameState(game, printer, winCallback) {
+function GameState(game, printer, winCallback, predictionService) {
     var gameState = this;
 
     this.game = game;
     this.print = printer;
+    this.predictionService = predictionService;
 
     this.allEntities = buildEntityMap(game.model);
 
@@ -256,21 +257,34 @@ function GameState(game, printer, winCallback) {
         winCallback();
     };
 
+    this.commandList = [];
+    for(var i in interactions) {
+        var interaction = interactions[i];
+        for(var j in interaction.cmds) {
+            gameState.commandList.push(interaction.cmds[j]);
+        }
+    }
     this.enter = function (text) {
-        interactions.forCmd(text.trim())
+        var trimmedText = text.trim();
+        interactions.forCmd(trimmedText)
             .do(this)
             .else(function () {
-                gameState.print("I do not know how to \"" + text + "\"...");
+                var prediction = predictionService.findClosestElement(trimmedText, gameState.commandList);
+                if(prediction) {
+                    gameState.print("Did you mean " + prediction + "?");
+                } else {
+                    gameState.print("I don't understand '" + trimmedText +"'.");
+                }
             });
     }
 }
 
-function Game(model) {
+function Game(model, predictionService) {
     this.startLocationName = model.start;
     this.startText = model.start_text;
     this.model = model;
 
-    this.start = function (printer, winCallback) {
-        return new GameState(this, printer, winCallback);
+    this.start = function (printer, winCallback, predictionService) {
+        return new GameState(this, printer, winCallback, predictionService);
     }
 }
