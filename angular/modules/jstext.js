@@ -15,7 +15,7 @@ jstext.controller("GameController", ["$scope", "$http", function ($scope, $http)
     };
 
     $scope.onWin = function () {
-        $scope.restart();
+       // $scope.restart();
     };
 
     $http.get("game/test.json").then(function (result) {
