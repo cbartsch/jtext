@@ -31,7 +31,9 @@
                         <img ng-src="{{location.image}}" class="location-img"/>
                     </div>
 
-                    <div class="col-md-2 inventory">
+                    <div class="col-sm-2 inventory">
+                        <i class="glyphicon glyphicon-briefcase pull-right"></i>
+                        <div class="clearfix"></div>
                         <ul class="nav nav-stacked navbar-right">
                             <li ng-repeat="(name, item) in inventory">
                                 <a href="#input" ng-click="useItem(name)"> {{name}}</a>
