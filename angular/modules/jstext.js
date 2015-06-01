@@ -32,15 +32,21 @@ jstext.controller("GameController", ["$scope", "$http", function ($scope, $http)
     };
     $scope.updateLocation();
 
-    $scope.print = function (text) {
+    var addLog = function(text, type) {
         $scope.log.push({
             index: $scope.log.length,
-            text: formatText(text)
+            text: text,
+            type: type
         });
+    };
+
+    $scope.print = function (text) {
+        addLog(formatText(text), "output");
     };
 
     $scope.input = "";
     $scope.command = function command() {
+        addLog($scope.input, "input");
         if ($scope.input === "restart") {
             $scope.restart();
         } else {
