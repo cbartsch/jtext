@@ -189,6 +189,7 @@
     },
     "kitchen": {
       "text": "Kitchen",
+      "imageUrl": "https://s-media-cache-ak0.pinimg.com/originals/ea/3d/a7/ea3da726fb1e34dca8fd90f4693f6360.jpg",
       "adjacent": ["hallway"],
       "look": {"text": "Your more or less clean kitchen.%nIt contains a counter and a fridge."},
       "objects": {
@@ -301,6 +302,7 @@
     },
     "hallway": {
       "text": "Hallway",
+      "imageUrl": "https://tellerallaboutit.files.wordpress.com/2010/09/dsc_0008.jpg",
       "enabled": false,
       "adjacent": [
         "bedroom",
