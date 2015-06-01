@@ -16,3 +16,21 @@ ul.log {
     text-align: center;
     font-size: 8pt;
 }
+
+div.log-cont {
+    max-height: 300px;
+    overflow: auto;
+}
+
+ul.log li.output {
+    color: black;
+}
+
+ul.log li.input {
+    color: grey;
+    font-weight: bold;
+}
+
+ul.log li.input::before {
+    content: "> ";
+}
