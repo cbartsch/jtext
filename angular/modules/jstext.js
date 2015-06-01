@@ -1,6 +1,6 @@
 "use strict";
 
-var jstext = angular.module("jstext", ['ngSanitize']);
+var jstext = angular.module("jstext", ["ngSanitize", "luegg.directives"]);
 
 function formatText(text) {
     return text.replace(/%n/g, "<br/>");
