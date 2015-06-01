@@ -27,7 +27,11 @@ var predictionService = prediction.factory("PredictionService", ["HAMMING_THRESH
         var closestElement = null;
         for (var i in haystack) {
             var test = haystack[i];
-            var currentDistance = this.findHammingDistance(element, test);
+            var currentEle = element;
+            if(currentEle.length > test.length) {
+                currentEle = currentEle.substr(0, test.length);
+            }
+            var currentDistance = this.findHammingDistance(currentEle, test);
             if (currentDistance < minDistance) {
                 minDistance = currentDistance;
                 closestElement = test;
