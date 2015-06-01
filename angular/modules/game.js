@@ -106,7 +106,7 @@ function EntityCommand(gameState, cmd, cmdKey, param) {
 
 function GoCommand(gameState, cmd, cmdKey, param) {
     var locationName = param;
-    if(!locationName) {
+    if (!locationName) {
         gameState.print("Where to go to?");
     } else {
         var location = gameState.allEntities[locationName];
@@ -126,9 +126,9 @@ function GoCommand(gameState, cmd, cmdKey, param) {
 }
 
 function HelpCommand(gameState) {
-    gameState.print("Available commands: " + interactions.map(function(interaction) {
-        return interaction.cmds[0];
-    }).join(", ") + ".");
+    gameState.print("Available commands: " + interactions.map(function (interaction) {
+            return interaction.cmds[0];
+        }).join(", ") + ".");
 }
 
 function Interaction(cmds, cmdKey, command) {
@@ -150,7 +150,8 @@ interactions.forCmd = function (cmd) {
     var usedCmd = "";
     var matches = $.grep(interactions, function (interaction) {
         return interaction.cmds.some(function (iCmd) {
-            if (cmd.substr(0, iCmd.length) === iCmd) {
+            if (cmd.substr(0, iCmd.length) === iCmd &&
+                (cmd.length == iCmd.length || cmd[iCmd.length] == " ")) {
                 usedCmd = iCmd;
                 return true;
             }
@@ -258,9 +259,9 @@ function GameState(game, printer, winCallback, predictionService) {
     };
 
     this.commandList = [];
-    for(var i in interactions) {
+    for (var i in interactions) {
         var interaction = interactions[i];
-        for(var j in interaction.cmds) {
+        for (var j in interaction.cmds) {
             gameState.commandList.push(interaction.cmds[j]);
         }
     }
@@ -270,10 +271,10 @@ function GameState(game, printer, winCallback, predictionService) {
             .do(this)
             .else(function () {
                 var prediction = predictionService.findClosestElement(trimmedText, gameState.commandList);
-                if(prediction) {
+                if (prediction) {
                     gameState.print("Did you mean " + prediction + "?");
                 } else {
-                    gameState.print("I don't understand '" + trimmedText +"'.");
+                    gameState.print("I don't understand '" + trimmedText + "'.");
                 }
             });
     }
