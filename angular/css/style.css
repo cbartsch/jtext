@@ -23,8 +23,8 @@ div.log-cont {
 }
 
 img.location-img {
-    max-height: 400px;
-    max-width: 100%;
+    /*max-height: 400px;*/
+    /*max-*/width: 100%;
 }
 
 ul.log li.output {
