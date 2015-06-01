@@ -57,5 +57,6 @@ jstext.controller("GameController", ["$scope", "$http", "PredictionService", fun
 
     $scope.useItem = function(name) {
         $scope.input = "use " + name + " with ";
+        setTimeout(function() { $("#inputfield").focus() }, 1);
     }
 }]);

@@ -31,9 +31,12 @@
                         <img ng-src="{{location.image}}" class="location-img"/>
                     </div>
 
-                    <div class="col-sm-2 inventory">
-                        <ul class="nav nav-stacked pull-right">
-                            <li ng-repeat="(name, item) in inventory" ng-click="useItem(name)">{{name}}</li>
+                    <div class="col-md-2 inventory">
+                        <h2>Inventory</h2>
+                        <ul class="nav nav-stacked navbar-right">
+                            <li ng-repeat="(name, item) in inventory">
+                                <a href="#input" ng-click="useItem(name)"> {{name}}</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -49,12 +52,14 @@
                 <div class="row">
                     <form ng-submit="command()" class="form">
                         <div class="form-group">
-                            <div class="col-md-11 col-sm-10">
-                                <input type="text" autofocus ng-model="input" class="form-control"
+                            <div class="col-sm-11">
+                                <input type="text" id="inputfield" autofocus ng-model="input" class="form-control"
                                        placeholder="Write command...">
                             </div>
-                            <div class="col-md-1 col-sm-1">
-                                <input type="submit" class="btn btn-primary" value="Send">
+                            <div class="col-sm-1">
+                                <a name="input">
+                                    <input type="submit" class="btn btn-primary" value="Send">
+                                </a>
                             </div>
                         </div>
                     </form>
