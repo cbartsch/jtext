@@ -32,9 +32,8 @@
                     </div>
 
                     <div class="col-sm-2 inventory">
-                        <h2>Inventory</h2>
-                        <ul ng-repeat="(name, item) in inventory" class="nav nav-stacked navbar-right">
-                            <li ng-click="useItem(name)">{{name}}</li>
+                        <ul class="nav nav-stacked pull-right">
+                            <li ng-repeat="(name, item) in inventory" ng-click="useItem(name)">{{name}}</li>
                         </ul>
                     </div>
                 </div>
