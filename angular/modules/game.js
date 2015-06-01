@@ -105,16 +105,23 @@ function EntityCommand(gameState, cmd, cmdKey, param) {
 }
 
 function GoCommand(gameState, cmd, cmdKey, param) {
-    var location = gameState.allEntities[param];
-    if (location && location.visible) {
-        if(location.enabled && gameState.location.adjacent.indexOf(location.name) >= 0) {
-            gameState.location = location;
-            gameState.print("You are now at: " + location.name);
-        } else {
-            gameState.print("Can not go to " + location.name);
-        }
+    var locationName = param;
+    if(!locationName) {
+        gameState.print("Where to go to?");
     } else {
-        gameState.print(param + " not found. Can not go.");
+        var location = gameState.allEntities[locationName];
+        if (location && location.visible) {
+            if (location === gameState.location) {
+                gameState.print("You are already at " + locationName);
+            } else if (location.enabled && gameState.location.adjacent.indexOf(location.name) >= 0) {
+                gameState.location = location;
+                gameState.print("You are now at: " + location.name);
+            } else {
+                gameState.print("Can not go to " + location.name);
+            }
+        } else {
+            gameState.print(locationName + " not found. Can not go.");
+        }
     }
 }
 
@@ -253,7 +260,7 @@ function GameState(game, printer, winCallback) {
         interactions.forCmd(text.trim())
             .do(this)
             .else(function () {
-                gameState.print("What");
+                gameState.print("I do not know how to \"" + text + "\"...");
             });
     }
 }
