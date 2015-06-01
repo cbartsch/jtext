@@ -175,7 +175,7 @@
             ],
             "do": [
               {
-                "type": "enabled",
+                "type": "enable",
                 "targets": ["hallway"]
               },
               {
