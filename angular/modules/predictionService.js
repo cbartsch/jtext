@@ -3,7 +3,7 @@
 var prediction = angular.module("jstext.prediction", []);
 prediction.constant("HAMMING_THRESHOLD", 4);
 
-var predictionService = prediction.factory("PredictionService", ["HAMMING_THRESHOLD", function(HAMMING_THRESHOLD) {
+prediction.factory("PredictionService", ["HAMMING_THRESHOLD", function(HAMMING_THRESHOLD) {
     var service = {};
     service.findClosestElement = function findClosestElement (element, haystack) {
         this.findHammingDistance = function findHammingDistance(a, b) {

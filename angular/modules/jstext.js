@@ -1,15 +1,15 @@
 "use strict";
 
-var jstext = angular.module("jstext", ["ngSanitize", "luegg.directives", "jstext.prediction"]);
+var jstext = angular.module("jstext", ["ngSanitize", "luegg.directives", "jstext.prediction", "jstext.game"]);
 function formatText(text) {
     return text.replace(/%n/g, "<br/>");
 }
 
-jstext.controller("GameController", ["$scope", "$http", "PredictionService", function ($scope, $http, predictionService) {
+jstext.controller("GameController", ["$scope", "$http", "Game", function ($scope, $http, Game) {
 
     $scope.restart = function () {
         $scope.log = [];
-        $scope.gameState = $scope.game.start($scope.print, $scope.onWin, predictionService);
+        $scope.gameState = $scope.game.start($scope.print, $scope.onWin);
         $scope.inventory = $scope.gameState.inventory.objects;
     };
 
