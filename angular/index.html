@@ -27,11 +27,13 @@
 
             <div class="panel-body">
                 <div class="row location">
-                    <div class="col-sm-8 col-sm-offset-2 location-img" style="background-image: url({{location.image}});">
+                    <div class="col-sm-8 col-sm-offset-2 location-img"
+                         style="background-image: url({{location.image}});">
                     </div>
 
                     <div class="col-sm-2 inventory">
                         <i class="glyphicon glyphicon-briefcase pull-right"></i>
+
                         <div class="clearfix"></div>
                         <ul class="nav nav-stacked navbar-right">
                             <li ng-repeat="(name, item) in inventory">
@@ -57,9 +59,8 @@
                                        placeholder="Write command...">
                             </div>
                             <div class="col-sm-1">
-                                <a name="input">
-                                    <input type="submit" class="btn btn-primary" value="Send">
-                                </a>
+                                <input type="submit" class="btn btn-primary" value="Send">
+                                <a name="input"></a>
                             </div>
                         </div>
                     </form>
