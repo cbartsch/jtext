@@ -16,7 +16,19 @@ gulp.task("clean", function (cb) {
     del(["js/*"], {force: true}, cb);
 });
 
-gulp.task("build", ["clean", "scripts"]);
+gulp.task("build", ["clean", "scripts", "ext-scripts"]);
+
+gulp.task("ext-scripts", function () {
+    return gulp.src([
+        "node_modules/jquery/dist/jquery.js",
+        "node_modules/bootstrap/dist/js/bootstrap.js",
+        "node_modules/angular/angular.js",
+        "node_modules/angularjs-scroll-glue/src/scrollglue.js",
+        "node_modules/angular-sanitize/angular-sanitize.js"
+    ]).pipe(concat("jstext-ext.js"))
+        .pipe(uglify({mangle: false}))
+        .pipe(gulp.dest("js"));
+});
 
 gulp.task("scripts", function () {
     return gulp.src([
