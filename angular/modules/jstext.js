@@ -46,10 +46,11 @@ jstext.controller("GameController", ["$scope", "$http", "Game", function ($scope
     $scope.input = "";
     $scope.command = function command() {
         addLog($scope.input, "input");
-        if ($scope.input === "restart") {
+        var input = $scope.input.toLowerCase();
+        if (input === "restart") {
             $scope.restart();
         } else {
-            $scope.gameState.enter($scope.input);
+            $scope.gameState.enter(input);
             $scope.updateLocation();
         }
         $scope.input = "";
